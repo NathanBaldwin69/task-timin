@@ -1,0 +1,33 @@
+{
+    "hi": 27.088170051574707,
+    "hello": {
+        "time_spent": 0,
+        "start_time": 1738515184.034208
+    },
+    "poop": {
+        "time_spent": 0,
+        "start_time": 1738515194.8365638
+    },
+    "hhi": {
+        "time_spent": 0,
+        "start_time": 1738515283.8134022
+    },
+    "yollo": 28.61478567123413,
+    "current_task": "poop",
+    "start_time": 1738515643.4375126,
+    "poop ooooo": {
+        "time_spent": 0,
+        "start_time": 1738517358.3174644
+    },
+    "yooooooo": {
+        "time_spent": 15.008448123931885
+    },
+    "whatup": {
+        "time_spent": 35.65203237533569,
+        "start_times": []
+    },
+    "natha": {
+        "time_spent": 5.0,
+        "start_times": []
+    }
+}
