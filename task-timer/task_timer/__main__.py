@@ -1,3 +1,23 @@
+"""
+Time Tracking Application
+
+This script allows users to manage tasks and track the time spent on them. 
+It includes functionality to start and stop tasks, view summaries of time spent, 
+edit timesheet data, and display a list of currently running tasks. Data is stored 
+in a JSON file for persistence across sessions.
+
+Commands:
+- start: Begin tracking a task.
+- stop: Stop tracking a task and log the time.
+- summary: View a summary of all tasks and time spent.
+- running: Display currently active tasks.
+- edit: Edit the time for a specific task.
+- exit: Exit the application.
+
+Author: Nathan Baldwin
+Date: February, 9, 2025
+"""
+
 import time
 import json
 import os
@@ -12,7 +32,10 @@ def display_header():
 
 # manage reading and writing tasks
 def load_tasks():
-    # check if file exists, if so read content
+    """
+    Loads the tasks from the JSON file.
+    Returns: A dictionary containing all tasks and their time data.
+    """
     if os.path.exists(TASK_FILE):
         with open(TASK_FILE, "r") as f:
             return json.load(f)
@@ -20,7 +43,9 @@ def load_tasks():
 
 # save tasks to json file
 def save_tasks(tasks):
-    # write to file, overwrite if exists
+    """
+    Saves the provided tasks to the JSON file.
+    """
     with open(TASK_FILE, "w") as f:
         json.dump(tasks, f, indent=4)
 
