@@ -18,7 +18,7 @@ Author: Nathan Baldwin
 Date: February, 9, 2025
 """
 
-import time
+import datetime
 import json
 import os
 
@@ -49,20 +49,25 @@ def save_tasks(tasks):
 def start_task(task_name):
    """Starts tracking a task by adding a start time to the task."""
     tasks = load_tasks()
+
     if task_name not in tasks:
         tasks[task_name] = {"time_spent": 0, "start_times": []}
-    tasks[task_name]["start_times"].append(time.time())
+        
+    tasks[task_name]["start_times"].append(datetime.datetime.now())
     save_tasks(tasks)
+
     print(f"Started task: {task_name}")
 
 def stop_task(task_name):
     """Stops tracking a task and calculates the time spent on it."""
     tasks = load_tasks()
+    
     if task_name not in tasks or not tasks[task_name].get("start_times"):
         print(f"Error: Task '{task_name}' is not running.")
         return
+        
     start_time = tasks[task_name]["start_times"].pop(0)
-    elapsed_time = time.time() - start_time
+    elapsed_time = datetime.datetime.now() - start_time
     tasks[task_name]["time_spent"] += elapsed_time
     
     save_tasks(tasks)
@@ -72,14 +77,16 @@ def show_summary():
     """Displays a summary of all tasks and the time spent on them."""
     tasks = load_tasks()
     print("Time Sheet Summary:")
+    
     for task, data in tasks.items():
         time_spent = data["time_spent"] if isinstance(data, dict) and "time_spent" in data else 0
         print(f"{task}: {time_spent:.2f} seconds")
 
 def show_running_tasks():
     """Displays a list of currently running tasks."""
-    tasks = load_tasks()
+    tasks = load_tasks() 
     running_tasks = [task for task, data in tasks.items() if isinstance(data, dict) and data.get("start_times")]
+   
     if running_tasks:
         print("Currently running tasks:")
         for task in running_tasks:
@@ -95,13 +102,17 @@ def edit_timesheet():
     tasks = load_tasks()
     show_summary()
     task_name = input("Enter the task you want to edit: ").strip()
+    
     if task_name not in tasks:
         print("Error: Task not found.")
         return
+    
     new_time = input(f"Enter new time for '{task_name}': ").strip()
+    
     if not new_time.isdigit():
         print("Error: Please enter a valid number.")
         return
+    
     tasks[task_name]["time_spent"] = float(new_time)
     save_tasks(tasks)
     print(f"Updated time for '{task_name}' to {new_time} seconds.")
@@ -111,7 +122,9 @@ def main():
     The main function that runs the time tracking application.
     Continuously prompts the user to input commands until 'exit' is entered.
     """
+    
     display_header()
+    
     while True:
         command = input("Enter command (start, stop, summary, running, edit, exit): ").strip().lower()
         if command == "start":
