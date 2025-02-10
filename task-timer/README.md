@@ -13,7 +13,7 @@ This Python-based time tracking application allows users to manage and log time 
 ## Requirements
 
 - Python 3.x
-- `json` and `os` libraries (part of Python standard library)
+- `json`, `datetime`, and `os` libraries (part of Python standard library)
 
 ## File Structure
 
