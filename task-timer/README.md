@@ -18,10 +18,3 @@ This Python-based time tracking application allows users to manage and log time 
 ## File Structure
 
 - `tasks.json`: This file stores all the tasks and their associated data in JSON format. Each task has a `time_spent` field representing the total time spent on the task, and `start_times` to record each start time for ongoing sessions.
-
-## Usage
-
-To use this application, run the script in your terminal:
-
-```bash
-python time_tracking.py
