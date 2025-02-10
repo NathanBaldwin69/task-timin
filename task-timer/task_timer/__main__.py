@@ -4,6 +4,12 @@ import os
 
 TASK_FILE = "tasks.json"
 
+def display_header():
+    print("=" * 50)
+    print("Time Tracking Application - Manage your tasks and time")
+    print("Start, stop, edit, and track time spent on your tasks.")
+    print("=" * 50)
+
 # manage reading and writing tasks
 def load_tasks():
     # check if file exists, if so read content
@@ -92,6 +98,7 @@ def edit_timesheet():
 
 # command line interface
 def main():
+    display_header()
     # loop until user manually exits
     while True:
         # give prompts for function
