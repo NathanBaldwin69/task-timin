@@ -1,5 +1,4 @@
-"""
-Time Tracking Application
+"""Time Tracking Application
 
 This script allows users to manage tasks and track the time spent on them. 
 It includes functionality to start and stop tasks, view summaries of time spent, 
@@ -36,7 +35,7 @@ def load_tasks():
     Load tasks from the JSON file.
     Returns: dict: A dictionary containing all tasks and their time data.
     """
-    if os.path.exists(TASK_FILE):
+    if os.path.exists(TASK_FILE):  # Check if the file exists before attempting to open it
         with open(TASK_FILE, "r") as f:
             return json.load(f)
     return {}
@@ -57,9 +56,9 @@ def start_task(task_name):
     tasks = load_tasks()
 
     if task_name not in tasks:
-        tasks[task_name] = {"time_spent": 0, "start_times": []}
+        tasks[task_name] = {"time_spent": 0, "start_times": []}  # Initialize task if not present
         
-    tasks[task_name]["start_times"].append(datetime.datetime.now())
+    tasks[task_name]["start_times"].append(datetime.datetime.now())  # Log current time as start time
     save_tasks(tasks)
 
     print(f"Started task: {task_name}")
@@ -72,11 +71,11 @@ def stop_task(task_name):
     tasks = load_tasks()
     
     if task_name not in tasks or not tasks[task_name].get("start_times"):
-        print(f"Error: Task '{task_name}' is not running.")
+        print(f"Error: Task '{task_name}' is not running.")  # Handle case where task is not running
         return
         
-    start_time = tasks[task_name]["start_times"].pop(0)
-    elapsed_time = (datetime.datetime.now() - start_time).total_seconds()
+    start_time = tasks[task_name]["start_times"].pop(0)  # Retrieve and remove the first start time
+    elapsed_time = (datetime.datetime.now() - start_time).total_seconds()  # Compute elapsed time
     tasks[task_name]["time_spent"] += elapsed_time
     
     save_tasks(tasks)
@@ -88,7 +87,8 @@ def show_summary():
     print("Time Sheet Summary:")
     
     for task, data in tasks.items():
-        time_spent = data["time_spent"] if isinstance(data, dict) and "time_spent" in data else 0
+        time_spent = data["time_spent"] if isinstance(data, dict) and "time_spent" in data else 0  
+        # Ensure valid data before accessing "time_spent"
         print(f"{task}: {time_spent:.2f} seconds")
 
 def show_running_tasks():
@@ -115,7 +115,7 @@ def edit_timesheet():
     
     new_time = input(f"Enter new time for '{task_name}': ").strip()
     
-    if not new_time.isdigit():
+    if not new_time.isdigit():  # Validate user input to ensure it's numeric
         print("Error: Please enter a valid number.")
         return
     
@@ -132,6 +132,7 @@ def main():
     
     while True:
         command = input("Enter command (start, stop, summary, running, edit, exit): ").strip().lower()
+        
         if command == "start":
             task_name = input("Enter task name: ").strip()
             start_task(task_name)
