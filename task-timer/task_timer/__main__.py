@@ -15,7 +15,7 @@ Commands:
 - exit: Exit the application.
 
 Author: Nathan Baldwin
-Date: February, 9, 2025
+Date: February 9, 2025
 """
 
 import datetime
@@ -25,7 +25,7 @@ import os
 TASK_FILE = "tasks.json"
 
 def display_header():
-    """Displays the program header with a brief description of the application."""
+    """Display the program header with a brief description of the application."""
     print("=" * 50)
     print("Time Tracking Application - Manage your tasks and time")
     print("Start, stop, edit, and track time spent on your tasks.")
@@ -33,8 +33,8 @@ def display_header():
 
 def load_tasks():
     """
-    Loads the tasks from the JSON file.
-    Returns: A dictionary containing all tasks and their time data.
+    Load tasks from the JSON file.
+    Returns: dict: A dictionary containing all tasks and their time data.
     """
     if os.path.exists(TASK_FILE):
         with open(TASK_FILE, "r") as f:
@@ -42,12 +42,18 @@ def load_tasks():
     return {}
 
 def save_tasks(tasks):
-    """Saves the provided tasks to the JSON file."""
+    """
+    Save the provided tasks to the JSON file.
+    Args: tasks (dict): The dictionary containing task data to be saved.
+    """
     with open(TASK_FILE, "w") as f:
         json.dump(tasks, f, indent=4)
 
 def start_task(task_name):
-   """Starts tracking a task by adding a start time to the task."""
+    """
+    Start tracking a task by adding a start time to the task.
+    Args: task_name (str): The name of the task to start tracking.
+    """
     tasks = load_tasks()
 
     if task_name not in tasks:
@@ -59,7 +65,10 @@ def start_task(task_name):
     print(f"Started task: {task_name}")
 
 def stop_task(task_name):
-    """Stops tracking a task and calculates the time spent on it."""
+    """
+    Stop tracking a task and calculate the time spent on it.  
+    Args: task_name (str): The name of the task to stop tracking.
+    """
     tasks = load_tasks()
     
     if task_name not in tasks or not tasks[task_name].get("start_times"):
@@ -67,14 +76,14 @@ def stop_task(task_name):
         return
         
     start_time = tasks[task_name]["start_times"].pop(0)
-    elapsed_time = datetime.datetime.now() - start_time
+    elapsed_time = (datetime.datetime.now() - start_time).total_seconds()
     tasks[task_name]["time_spent"] += elapsed_time
     
     save_tasks(tasks)
     print(f"Stopped task: {task_name}. Time logged: {elapsed_time:.2f} seconds")
 
 def show_summary():
-    """Displays a summary of all tasks and the time spent on them."""
+    """Display a summary of all tasks and the time spent on them."""
     tasks = load_tasks()
     print("Time Sheet Summary:")
     
@@ -83,7 +92,7 @@ def show_summary():
         print(f"{task}: {time_spent:.2f} seconds")
 
 def show_running_tasks():
-    """Displays a list of currently running tasks."""
+    """Display a list of currently running tasks."""
     tasks = load_tasks() 
     running_tasks = [task for task, data in tasks.items() if isinstance(data, dict) and data.get("start_times")]
    
@@ -95,10 +104,7 @@ def show_running_tasks():
         print("No tasks are currently running.")
 
 def edit_timesheet():
-    """
-    Allows the user to edit the time recorded for a specific task.
-    Prompts the user for the task name and new time to set.
-    """
+    """Allow the user to edit the time recorded for a specific task."""
     tasks = load_tasks()
     show_summary()
     task_name = input("Enter the task you want to edit: ").strip()
@@ -119,10 +125,9 @@ def edit_timesheet():
 
 def main():
     """
-    The main function that runs the time tracking application.
-    Continuously prompts the user to input commands until 'exit' is entered.
+    Run the time tracking application.
+    Continuously prompt the user to input commands until 'exit' is entered.
     """
-    
     display_header()
     
     while True:
