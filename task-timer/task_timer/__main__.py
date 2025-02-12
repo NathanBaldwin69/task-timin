@@ -93,15 +93,16 @@ def show_summary():
 
 def show_running_tasks():
     """Display a list of currently running tasks."""
-    tasks = load_tasks() 
-    running_tasks = [task for task, data in tasks.items() if isinstance(data, dict) and data.get("start_times")]
-   
+    tasks = load_tasks()
+    running_tasks = [task for task, data in tasks.items() if isinstance(data, dict) and data.get("start_times") and len(data["start_times"]) > 0]
+
     if running_tasks:
         print("Currently running tasks:")
         for task in running_tasks:
             print(f"- {task} ({len(tasks[task]['start_times'])} instance(s) running)")
     else:
         print("No tasks are currently running.")
+
 
 def edit_timesheet():
     """Allow the user to edit the time recorded for a specific task."""
@@ -132,7 +133,6 @@ def main():
     
     while True:
         command = input("Enter command (start, stop, summary, running, edit, exit): ").strip().lower()
-        
         if command == "start":
             task_name = input("Enter task name: ").strip()
             start_task(task_name)
